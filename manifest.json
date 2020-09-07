@@ -1,0 +1,52 @@
+{
+  "manifest_version": 2,
+
+  "name": "InterHigh Extension",
+  "version": "1.0.0.5",
+  "description" : "Improves some functionality of InterHigh online school platform for parents and students",
+
+  "content_scripts": [
+    {
+      "matches": ["*://schoolbase.online/Timetable/ViewTimetable/PeriodBased*"],
+      "css": ["styles.css"],
+      "js": ["res/js/jquery-3.4.1.min.js", "res/js/moment.min.js", "res/js/moment-timezone-with-data-10-year-range.min.js", "functions.js", "parents/timetable.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://schoolbase.online/MainMenu*"],
+      "css": ["styles.css"],
+      "js": ["res/js/jquery-3.4.1.min.js", "res/js/moment.min.js", "res/js/moment-timezone-with-data-10-year-range.min.js", "functions.js", "parents/mainmenu.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://hub.interhigh.co.uk/dashboard/?"],
+      "css": ["styles.css"],
+      "js":["res/js/jquery-3.4.1.min.js", "res/js/moment.min.js", "res/js/moment-timezone-with-data-10-year-range.min.js", "functions.js", "students/ihdashboard.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://hub.interhigh.co.uk/dashboard_junior/?"],
+      "css": ["styles_junior.css"],
+      "js":["res/js/jquery-3.4.1.min.js", "res/js/moment.min.js", "res/js/moment-timezone-with-data-10-year-range.min.js", "functions.js", "students/ihdashboard.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "*://schoolbase.online/",
+    "*://*.interhigh.co.uk/",
+    "*://*.instructure.com/"
+  ],
+  "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "res/ico/favicon-16x16.png",
+        "32": "res/ico/favicon-32x32.png",
+        "128": "res/ico/favicon-128x128.png"
+      }
+  },
+  "icons": {
+    "16": "res/ico/favicon-16x16.png",
+    "32": "res/ico/favicon-32x32.png",
+    "128": "res/ico/favicon-128x128.png"
+  }
+}

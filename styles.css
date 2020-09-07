@@ -1,0 +1,14 @@
+.ihexParentTimeTableCurrentLesson {
+    background-color: aquamarine;
+}
+
+.ihexStudentTimeTableCurrentLesson {
+    background-color: darkcyan !important;
+}
+
+.ihexGotoClass {
+    background-color: rgb(77, 46, 105);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}

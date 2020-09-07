@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "InterHigh Extension",
-  "version": "1.0.0.5",
+  "version": "1.0.0.3",
   "description" : "Improves some functionality of InterHigh online school platform for parents and students",
 
   "content_scripts": [
@@ -10,13 +10,18 @@
       "matches": ["*://schoolbase.online/Timetable/ViewTimetable/PeriodBased*"],
       "css": ["styles.css"],
       "js": ["res/js/jquery-3.4.1.min.js", "res/js/moment.min.js", "res/js/moment-timezone-with-data-10-year-range.min.js", "functions.js", "parents/timetable.js"],
-      "run_at": "document_end"
+      "run_at": "document_end",
+      "all_frames": true
     },
     {
-      "matches": ["*://schoolbase.online/MainMenu*"],
+      "matches": [
+        "*://schoolbase.online/MainMenu*",
+        "*://schoolbase.online/Gadget/GetFullRTT*"
+      ],
       "css": ["styles.css"],
-      "js": ["res/js/jquery-3.4.1.min.js", "res/js/moment.min.js", "res/js/moment-timezone-with-data-10-year-range.min.js", "functions.js", "parents/mainmenu.js"],
-      "run_at": "document_end"
+      "js": ["res/js/jquery-3.4.1.min.js", "res/js/moment.min.js", "res/js/moment-timezone-with-data-10-year-range.min.js", "functions.js", "parents/timetable.js", "parents/mainmenu.js"],
+      "run_at": "document_end",
+      "all_frames": true
     },
     {
       "matches": ["*://hub.interhigh.co.uk/dashboard/?"],

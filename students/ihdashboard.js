@@ -1,17 +1,33 @@
+var lessonLondonTimes = {}
+
 function highlightCurrentLesson() {
     $(".ihexStudentTimeTableCurrentLesson").each(function() {$(this).removeClass("ihexStudentTimeTableCurrentLesson")});
-    var currentLesson = ihexGetCurrentLesson();
-    var currentDOW = new Date().getDay();
-    if (currentDOW > 0 && currentDOW < 6){
-        var elem = $("table").find("tr").first().find("th")[currentDOW];
-        //$(elem).addClass("ihexStudentTimeTableCurrentLesson");
-        $(elem).addClass("ihexStudentTimeTableCurrentLesson");
-        if (currentLesson != -1){
-            var elem = $("table tr").slice(currentLesson + 1).first().find("th")[0];
-            $(elem).addClass("ihexStudentTimeTableCurrentLesson");
-            elem = $("table tr").slice(currentLesson + 1).first().find("td")[currentDOW - 1];
-            $(elem).addClass("ihexStudentTimeTableCurrentLesson");
-        };
+    $(".lesson_on").each(function () {$(this).removeClass("lesson_on");})
+
+    nowInLondon = ihexLocalTimeToLondonTime()
+    var currentDOW = new Date(nowInLondon.format("YYYY-MM-DD")).getDay();
+    if (currentDOW > 0 && currentDOW < 6) {
+        var elem = $("div.day_header")[currentDOW];
+        $(elem).addClass("lesson_on");
+
+        dow = 0
+        $("#time-table-holder > div").each(function(){
+            colId = $(this).attr("id")
+            if (colId != "time-vert") {
+                dow += 1
+                if (dow == currentDOW) {
+                    $("#" + colId + " > .lessonblock").each(function(){
+                        lessonId = $(this).attr("id")
+                        startTime = lessonLondonTimes[lessonId]['start']
+                        endTime = lessonLondonTimes[lessonId]['end']
+                        nowInLondonF = nowInLondon.format("HH:mm")
+                        if (nowInLondonF >= startTime && nowInLondonF <= endTime) {
+                            $(this).addClass("lesson_on")
+                        }
+                    })
+                }
+            }
+        })
     };
 };
 
@@ -39,32 +55,38 @@ $(document).ready(function () {
         });
         
         //Replace London lessons time with local time
-        var i = 0;
-        $("table tr").slice(1).each(function () {
-            th = $(this).find("th").first();
-            if (th.html() !== "Break")
-            {
-                var content = "<p style='margin-bottom: .1rem;'>" + i + "</p>" + ihexGetLessonLocalStartTime(i) + "&nbsp;–&nbsp;" + ihexGetLessonLocalEndTime(i);
-                th.html(content);
-                i++;
-            }
+        $(".timehourblock > p").each(function () {
+            var content = ihexLondonTimeToLocal($(this).html());
+            $(this).html(content)
         });
 
-        $(".col-12 .card").first().css("max-height", "none");
+        $(".lessonblock > p").each(function () {
+            id = $(this.parentElement).attr("id")
+            var londonDiaS = $(this).html().trim()
+            var londonDiaA = londonDiaS.split(" - ")
+            var londonStart = londonDiaA[0]
+            var londonEnd = londonDiaA[1]
+            lessonLondonTimes[id] = { 'start': londonStart, 'end': londonEnd}
+            var content = ihexLondonTimeToLocal(londonStart) + " - " + ihexLondonTimeToLocal(londonEnd);
+            $(this).html(content)
+        });
 
-        //Update the information about current lesson
+        // $(".col-12 .card").first().css("max-height", "none");
+
+        Update the information about current lesson
         setInterval(function () {
-            highlightCurrentLesson();
+               highlightCurrentLesson();
         }, 5000);
 
         //Remove standard lesson highlight
-        setInterval(function () {
-            $(".lesson_on").each(function () {
-                $(this).removeClass("lesson_on");
-            })
-        }, 1000);
+        //  setInterval(function () {
+        //      $(".lesson_on").each(function () {
+        //          $(this).removeClass("lesson_on");
+        //      })
+        //  }, 1000);
 
         highlightCurrentLesson();
+
     }, 500); 
 });
 

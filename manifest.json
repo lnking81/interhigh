@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "InterHigh Extension",
-  "version": "1.0.0.4",
+  "version": "1.0.0.5",
   "description" : "Improves some functionality of InterHigh online school platform for parents and students",
 
   "content_scripts": [

@@ -73,7 +73,7 @@ $(document).ready(function () {
 
         // $(".col-12 .card").first().css("max-height", "none");
 
-        Update the information about current lesson
+        //Update the information about current lesson
         setInterval(function () {
                highlightCurrentLesson();
         }, 5000);

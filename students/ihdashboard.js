@@ -2,32 +2,33 @@ var lessonLondonTimes = {}
 
 function highlightCurrentLesson() {
     $(".ihexStudentTimeTableCurrentLesson").each(function() {$(this).removeClass("ihexStudentTimeTableCurrentLesson")});
-    $(".lesson_on").each(function () {$(this).removeClass("lesson_on");})
+    //$(".lesson_on").each(function () {$(this).removeClass("lesson_on");})
 
     nowInLondon = ihexLocalTimeToLondonTime()
     var currentDOW = new Date(nowInLondon.format("YYYY-MM-DD")).getDay();
     if (currentDOW > 0 && currentDOW < 6) {
-        var elem = $("div.day_header")[currentDOW];
+        var elem = $("div.day_header")[currentDOW-1];
         $(elem).addClass("lesson_on");
 
-        dow = 0
-        $("#time-table-holder > div").each(function(){
-            colId = $(this).attr("id")
-            if (colId != "time-vert") {
-                dow += 1
-                if (dow == currentDOW) {
-                    $("#" + colId + " > .lessonblock").each(function(){
-                        lessonId = $(this).attr("id")
-                        startTime = lessonLondonTimes[lessonId]['start']
-                        endTime = lessonLondonTimes[lessonId]['end']
-                        nowInLondonF = nowInLondon.format("HH:mm")
-                        if (nowInLondonF >= startTime && nowInLondonF <= endTime) {
-                            $(this).addClass("lesson_on")
-                        }
-                    })
-                }
-            }
-        })
+        // dow = 0
+        // $("#time-table-holder > div").each(function(){
+        //     colId = $(this).attr("id")
+        //     if (colId != "time-vert") {
+        //         //dow += 1
+        //         if (dow == currentDOW) {
+        //             console.log()
+        //             $("#" + colId + " > .lessonblock").each(function(){
+        //                 lessonId = $(this).attr("id")
+        //                 startTime = lessonLondonTimes[lessonId]['start']
+        //                 endTime = lessonLondonTimes[lessonId]['end']
+        //                 nowInLondonF = nowInLondon.format("HH:mm")
+        //                 if (nowInLondonF >= startTime && nowInLondonF <= endTime) {
+        //                     $(this).addClass("lesson_on")
+        //                 }
+        //             })
+        //         }
+        //     }
+        // })
     };
 };
 
@@ -40,7 +41,7 @@ $(document).ready(function () {
         })
 
         $('.ihexGotoClass').on('click', function () {
-            var newWindow = window.open('https://hub.interhigh.co.uk/dashboard/learning/?sso=1', '_blank');
+            var newWindow = window.open('https://hub.kingsinterhigh.co.uk/dashboard/learning/?sso=1', '_blank');
             var courseId = $(this).attr("id");
             $(window).focus();
             var interval=setInterval(function() {
@@ -53,7 +54,7 @@ $(document).ready(function () {
                 };
             }, 500)
         });
-        
+
         //Replace London lessons time with local time
         $(".timehourblock > p").each(function () {
             var content = ihexLondonTimeToLocal($(this).html());
@@ -87,6 +88,6 @@ $(document).ready(function () {
 
         highlightCurrentLesson();
 
-    }, 500); 
+    }, 500);
 });
 

@@ -41,5 +41,5 @@
    "name": "InterHigh Extension",
    "permissions": [ "*://schoolbase.online/", "*://*.interhigh.co.uk/", "*://*.kingsinterhigh.co.uk/", "*://*.instructure.com/" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "1.0.0.7"
+   "version": "1.0.0.8"
 }

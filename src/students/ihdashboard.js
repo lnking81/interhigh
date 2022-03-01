@@ -72,6 +72,17 @@ $(document).ready(function () {
             $(this).html(content)
         });
 
+        $(".lessonblockclash > p").each(function () {
+            id = $(this.parentElement).attr("id")
+            var londonDiaS = $(this).html().trim()
+            var londonDiaA = londonDiaS.split(" - ")
+            var londonStart = londonDiaA[0]
+            var londonEnd = londonDiaA[1]
+            lessonLondonTimes[id] = { 'start': londonStart, 'end': londonEnd}
+            var content = ihexLondonTimeToLocal(londonStart) + " - " + ihexLondonTimeToLocal(londonEnd);
+            $(this).html(content)
+        });
+
         // $(".col-12 .card").first().css("max-height", "none");
 
         //Update the information about current lesson
